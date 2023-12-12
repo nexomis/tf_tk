@@ -1,3 +1,10 @@
+/**
+ * This Terraform configuration file defines the infrastructure resources for a network module.
+ * It creates an AWS VPC, subnets (private and public), an internet gateway, route tables, route table associations,
+ * security groups, and sets up ingress and egress rules.
+ *
+ */
+ 
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr
   enable_dns_support   = true

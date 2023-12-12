@@ -1,3 +1,10 @@
+/**
+ * This Terraform configuration file defines the resources required to provision an EC2 instance.
+ * It generates a TLS private key, an AWS key pair, and a random pet name for the key suffix.
+ * The EC2 instance is created using the specified AMI, instance type, subnet, security group, and other parameters.
+ * The user data script sets the hostname of the instance.
+ */
+
 # Generate outputs for the following module
 resource "tls_private_key" "ecs_key" {
   algorithm = "RSA"
@@ -30,7 +37,7 @@ resource "aws_instance" "ec2_instance" {
   ami                         = local.is_arm_instance ? data.aws_ssm_parameter.debian_bullseye_arm64_ami.value : data.aws_ssm_parameter.debian_bullseye_amd64_ami.value
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id
-  iam_instance_profile        = var.iam_instance_profile_name
+  iam_instance_profile        = var.iam_instance_profile_name != "" ? var.iam_instance_profile_name : null
   vpc_security_group_ids      = [var.security_group_id]
   associate_public_ip_address = var.associate_public_ip
 

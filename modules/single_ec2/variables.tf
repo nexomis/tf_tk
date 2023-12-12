@@ -28,6 +28,7 @@ variable "security_group_id" {
 variable "iam_instance_profile_name" {
   description = "Instance Profile to launch the instance with"
   type        = string
+  default     = ""
 }
 
 output "is_arm_instance" {
