@@ -22,7 +22,7 @@ resource "random_pet" "key_suffix" {
 }
 
 locals {
-  is_arm_instance = contains(split(".", var.instance_type)[0], "g")
+  is_arm_instance = strcontains(split(".", var.instance_type)[0], "g")
 }
 
 data "aws_ssm_parameter" "debian_bullseye_amd64_ami" {
