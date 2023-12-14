@@ -49,11 +49,22 @@ resource "aws_instance" "ec2_instance" {
   }
 
   key_name                    = aws_key_pair.deployer.key_name
-    user_data = <<-EOF
-              #!/bin/bash
-              hostnamectl set-hostname ${var.name}
-              EOF
+  user_data = <<-EOF
+    #!/bin/bash
+    hostnamectl set-hostname ${var.name}
+  EOF
+
   tags = {
     Name = "${var.name}"
+  }
+
+  dynamic "instance_market_options" {
+    for_each = var.spot_instance ? [1] : []
+    content {
+      market_type = "spot"
+      spot_options {
+        spot_instance_type = "one-time"
+      }
+    }
   }
 }

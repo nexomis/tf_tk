@@ -40,3 +40,9 @@ variable "volume_size" {
   type        = number
   default     = null 
 }
+
+variable "spot_instance" {
+  description = "Whether the instance use spot pricing"
+  type        = bool
+  default     = false 
+}
