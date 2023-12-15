@@ -52,9 +52,3 @@ variable "spot_instance_type" {
   type        = string
   default     = "persistent"
 }
-
-variable "instance_initiated_shutdown_behavior" {
-  description = "instance_initiated_shutdown_behavior either stop or terminate"
-  type        = string
-  default     = "stop"
-}

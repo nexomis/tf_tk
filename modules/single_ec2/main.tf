@@ -40,7 +40,6 @@ resource "aws_instance" "ec2_instance" {
   iam_instance_profile        = var.iam_instance_profile_name != "" ? var.iam_instance_profile_name : null
   vpc_security_group_ids      = [var.security_group_id]
   associate_public_ip_address = var.associate_public_ip
-  instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior
 
   dynamic "root_block_device" {
     for_each = var.volume_size != null ? [1] : []
@@ -65,6 +64,7 @@ resource "aws_instance" "ec2_instance" {
       market_type = "spot"
       spot_options {
         spot_instance_type = var.spot_instance_type
+        instance_interruption_behavior = var.spot_instance_type == "one-time" ? "terminate" : "stop"
       }
     }
   }
