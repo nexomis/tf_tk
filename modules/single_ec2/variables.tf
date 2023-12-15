@@ -46,3 +46,9 @@ variable "spot_instance" {
   type        = bool
   default     = false 
 }
+
+variable "spot_instance_type" {
+  description = "spot_instance_type either one-time or persistent"
+  type        = string
+  default     = "persistent"
+}
