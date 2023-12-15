@@ -63,7 +63,7 @@ resource "aws_instance" "ec2_instance" {
     content {
       market_type = "spot"
       spot_options {
-        spot_instance_type = "$var.spot_instance_type"
+        spot_instance_type = var.spot_instance_type
       }
     }
   }
