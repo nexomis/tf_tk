@@ -9,6 +9,12 @@ variable "name" {
   default     = "nexomis_IaC_vpc"
 }
 
+variable "s3_gateway_region" {
+  description = "The region for the S3 endpoint Gateway"
+  type        = string
+  default     = "eu-west-3"
+}
+
 variable "public_subnets" {
   description = "A list of public subnet CIDRs"
   type        = list(string)
