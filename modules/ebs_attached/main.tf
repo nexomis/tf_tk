@@ -1,4 +1,5 @@
 data "aws_iam_policy_document" "assume_role" {
+  count = var.retain_count == 0? 0 : 1
   statement {
     effect = "Allow"
 
@@ -12,8 +13,9 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "dlm_lifecycle_role" {
+  count = var.retain_count == 0 ? 0 : 1
   name               = "dlm-lifecycle-role${var.name_suffix}"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
 }
 
 data "aws_iam_policy_document" "dlm_lifecycle" {
@@ -75,14 +77,16 @@ data "aws_iam_policy_document" "dlm_lifecycle" {
 }
 
 resource "aws_iam_role_policy" "dlm_lifecycle" {
+  count = var.retain_count == 0 ? 0 : 1
   name   = "dlm-lifecycle-policy"
-  role   = aws_iam_role.dlm_lifecycle_role.id
+  role   = aws_iam_role.dlm_lifecycle_role[0].id
   policy = data.aws_iam_policy_document.dlm_lifecycle.json
 }
 
 resource "aws_dlm_lifecycle_policy" "snap" {
+  count = var.retain_count == 0 ? 0 : 1
   description        = "example DLM lifecycle policy"
-  execution_role_arn = aws_iam_role.dlm_lifecycle_role.arn
+  execution_role_arn = aws_iam_role.dlm_lifecycle_role[0].arn
   state              = "ENABLED"
 
   policy_details {
