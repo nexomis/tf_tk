@@ -1,4 +1,5 @@
 resource "local_sensitive_file" "pem_file" {
+  depends_on = var.hosts
   for_each = { for h in var.hosts : h.inventory_name => h }
   file_permission = "0600"
   content = each.value.pem_string
