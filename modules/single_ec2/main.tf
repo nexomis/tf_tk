@@ -25,16 +25,8 @@ locals {
   is_arm_instance = strcontains(split(".", var.instance_type)[0], "g")
 }
 
-data "aws_ssm_parameter" "debian_bullseye_amd64_ami" {
-  name = "/aws/service/debian/release/bullseye/latest/amd64"
-}
-
-data "aws_ssm_parameter" "debian_bullseye_arm64_ami" {
-  name = "/aws/service/debian/release/bullseye/latest/arm64"
-}
-
 resource "aws_instance" "ec2_instance" {
-  ami                         = local.is_arm_instance ? data.aws_ssm_parameter.debian_bullseye_arm64_ami.value : data.aws_ssm_parameter.debian_bullseye_amd64_ami.value
+  ami                         = var.instance_ami
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id
   iam_instance_profile        = var.iam_instance_profile_name != "" ? var.iam_instance_profile_name : null
@@ -49,10 +41,6 @@ resource "aws_instance" "ec2_instance" {
   }
 
   key_name                    = aws_key_pair.deployer.key_name
-  user_data = <<-EOF
-    #!/bin/bash
-    hostnamectl set-hostname ${var.name}
-  EOF
 
   tags = {
     Name = "${var.name}"

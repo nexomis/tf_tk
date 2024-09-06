@@ -52,3 +52,8 @@ variable "spot_instance_type" {
   type        = string
   default     = "persistent"
 }
+
+variable "instance_ami" {
+  description = "instance ami"
+  type        = string
+}
