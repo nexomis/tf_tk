@@ -41,6 +41,18 @@ variable "volume_size" {
   default     = null 
 }
 
+variable "volume_iops" {
+  description = "Volume iops for the EC2 instance (Default: 3000)"
+  type        = number
+  default     = 3000 
+}
+
+variable "volume_throughput" {
+  description = "Volume hroughput for the EC2 instance (Default: 125)"
+  type        = number
+  default     = 125 
+}
+
 variable "spot_instance" {
   description = "Whether the instance use spot pricing"
   type        = bool

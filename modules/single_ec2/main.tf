@@ -37,6 +37,9 @@ resource "aws_instance" "ec2_instance" {
     for_each = var.volume_size != null ? [1] : []
     content {
       volume_size = var.volume_size
+      volume_type = "gp3"
+      iops = var.volume_iops
+      throughput = var.volume_throughput
     }
   }
 
